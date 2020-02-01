@@ -72,8 +72,13 @@ return email.isEmpty()||contraseña.isEmpty() ;
         //Intent funciona para mandar un mensaje, se comunica para resolver un problema
         //En este mensaje se envia un Contexto (origen) y un destino
         Intent mainIntent= new Intent(this, MainActivity.class);
+        //PutExtra Envia informacion  de tipo key,value  a traves del intent
+        mainIntent.putExtra("email",email);
+        mainIntent.putExtra("contraseña",contraseña);
         //Este metodo ejecuta el intent, en este caso para iniciar otra pantalla.
         startActivity(mainIntent);
+        //La activity se queda en segundo plano. para cerrarla se aplica el metodo finish(). Este solo se puede ejecutar desde la propia activity
+        finish();
     }
 
 }
