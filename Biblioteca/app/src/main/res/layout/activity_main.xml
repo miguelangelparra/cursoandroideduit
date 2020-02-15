@@ -8,10 +8,18 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/TBmitoolbar"
+        />
+
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ListaBiblioteca"/>
+        android:id="@+id/ListaBiblioteca"
+        />
 
 
 
