@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    final static public String WIFI = "WIFI";
+    final static public String ESTADO_WIFI = "estado_Wifi";
+
+
     private ArrayList<Libro> Libros =new ArrayList<>();
     private AdaptadorLibro adaptador =new AdaptadorLibro();
     private Toolbar TBmitoolbar;
@@ -21,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         Libros.add(new Libro(1,"1984","George Orwell"));
         Libros.add(new Libro(2,"El Tunel","Ernesto Sabato"));
@@ -37,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ListView LibrosLV = (ListView) findViewById(R.id.ListaBiblioteca);
 
 
-LibroManager.getInstance().setLibros(Libros);
+LibroManager.getInstance(getApplicationContext()).setLibros(Libros);
 
         adaptador = new AdaptadorLibro(Libros);
         LibrosLV.setAdapter(adaptador);
@@ -47,6 +56,17 @@ LibroManager.getInstance().setLibros(Libros);
 
         setSupportActionBar(TBmitoolbar);
         getSupportActionBar().setTitle("Biblioteca");
+
+        //WIFI - Persistencia de datos
+        Boolean WIFI_ONLY = true;
+        SharedPreferences preferences = getSharedPreferences(WIFI,MODE_PRIVATE);
+        //Esto es como un trabajador de base de datos , permite editar
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(ESTADO_WIFI,WIFI_ONLY);
+        editor.apply();
+
+
+
 
     }
 
@@ -76,7 +96,7 @@ LibroManager.getInstance().setLibros(Libros);
     @Override
     protected void onResume() {
         super.onResume();
-adaptador.setLibros(LibroManager.getInstance().getLibros());
+adaptador.setLibros(LibroManager.getInstance(getApplicationContext()).getLibros());
 adaptador.notifyDataSetChanged();
 
 
